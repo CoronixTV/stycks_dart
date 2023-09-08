@@ -1,17 +1,7 @@
 // TODO: Put public facing types in this file.
 
 /// Checks if you are awesome. Spoiler: you are.
-void main(List<String> arguments) {
-  var data = StycksEncode();
-  data.stStringAppend("name", asStycksString("Stycks"));
-  data.stIntAppend("age", asStycksInt(18));
-  data.stFloatAppend("height", asStycksFloat(1.8));
-  data.stBoolAppend("height", asStycksBool(true));
-  data.stListAppend("hobbies", asStycksList(["coding", "gaming", "sleeping"]));
-  var decode = StycksDecode(data.stEncode());
-  var name = decode.getEntry("hobbies");
-  print(name.nativeList);
-}
+
 
 class StycksData {
   var nativeString;
@@ -180,18 +170,14 @@ class StycksDecode {
     var stycksdataClean = stycksdata.substring(1, stycksdata.length - 1);
     var items = stycksdataClean.split(",");
     items.removeAt(0);
-    var values = [];
+    var names = [];
     items.forEach((element) {
-      var value = element.split(":")[1];
-      value = value.substring(1, value.length - 1);
-      values.add(value);
+      var name = element.split(":")[1];
+      name = name.substring(1, name.length - 1);
+      names.add(name);
     });
-    //values.removeAt(0);
-    values[0] = values[0].substring(1, values[0].length);
-    return values;
-  }
-
-  getTypes() {
+    return names;
+  }  getTypes() {
     var names = _getNames();
     List types = [];
     var stycksdataClean = stycksdata.substring(1, stycksdata.length - 1);
@@ -201,8 +187,6 @@ class StycksDecode {
     types = meta.split("␟");
     types.removeAt(0);
     Map typesMap = {};
-    print(types);
-    print(names);
     types.forEach((element) {
       typesMap[names[types.indexOf(element)]] = element;
     });
@@ -210,14 +194,9 @@ class StycksDecode {
   }
 
   StycksData getEntry(String name) {
-    print(_names);
-    print(_values);
-    print(_types);
     if (_names.contains(name)) {
       Type type = typeOf(name);
-      print(type);
       var value = _values[_names.indexOf(name)];
-      print(value);
       if (type == String) {
         return StycksData(value, null, null, null, null);
       } else if (type == int) {

@@ -1,4 +1,4 @@
-import 'package:stycks_dart/stycks_dart.dart';
+import '../lib/stycks_dart.dart';
 
 void main() {
   var name = asStycksString("Stycks");
@@ -8,7 +8,7 @@ void main() {
   data.stStringAppend("name", name);
   data.stIntAppend("age", age);
   data.stFloatAppend("height", height);
-
+  //print(data.stEncode());
   var decode = StycksDecode(data.stEncode());
   var name2 = decode.getEntry("name").nativeString;
   var age2 = decode.getEntry("age").nativeInt;
